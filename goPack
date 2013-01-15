@@ -1,0 +1,129 @@
+#!/bin/sh
+
+if [ ! -e goPack ]
+then
+  echo
+  echo "Ensure you run this file from the SAME folder as where it was"
+  echo "installed, otherwise the kitchen will have problems running the"
+  echo "scripts.  After you 'cd' to the correct folder, start the kitchen"
+  echo "with the ./GoPack command, NOT with any other command or method!"
+  exit 0
+fi
+
+if [ ! -d miui_OneX ]
+then
+  clear;
+  echo
+  echo "miui_OneX file directory does not exist, exit"
+  echo
+  exit 1;
+fi
+
+
+function MAKE_MIUI_ONEXT_PACKAGE()
+{
+    rm -rf ./tmp
+    [ -d tmp ]||mkdir -p tmp
+    ORG_FILE_NAME=$1
+    if [ ! -f miui_OneX/$ORG_FILE_NAME ]
+    then
+      echo Fault, exit;
+      exit 1;
+    fi;
+    echo "Unzip $ORG_FILE_NAME"
+    unzip -q miui_OneX/${ORG_FILE_NAME}  -d ./tmp || (echo "Fail to unzip file"; return 1;)
+
+    echo "Remove useless OneX files"
+    rm -f ./tmp/system/lib/modules/*
+    rm -f ./tmp/system/lib/hw/nfc.endeavoru.so
+    rm -f ./tmp/system/lib/hw/sensors.endeavoru.so
+    rm -f ./tmp/boot.img
+
+    echo "Copy OneXT files"
+    pushd OneXTFiles >/dev/null 2>&1
+    find . -depth -print0 |cpio -pam0dVu ../tmp/
+    popd  >/dev/null 2>&1
+
+    THIS_HOUR=`date +%Y%m%d%H`00.00
+    pushd ./tmp >/dev/null 2>&1
+    echo "Update timestamps"
+    find . -exec touch -t ${THIS_HOUR} {} \;
+    echo "Zip packing"
+    zip -r -y -q  out  data META-INF system boot.img
+    popd >/dev/null 2>&1
+
+    SIGN_TOOLS_DIR=./tools/signapk_files
+    echo "Sign zip"
+    java -jar $SIGN_TOOLS_DIR/signapk.jar $SIGN_TOOLS_DIR/testkey.x509.pem $SIGN_TOOLS_DIR/testkey.pk8 ./tmp/out.zip ./tmp/out-signed.zip
+
+    THIS_MINUTE=`date +%Y%m%d%H%M`
+    RELEASE_DATA=`echo $ORG_FILE_NAME |sed 's/^miui_OneX_\([0-9.]*\)_\([a-e0-9]\{10\}\)_\([0-9.]*\).zip$/\1/'`
+    RELEASE_VERSION=`echo $ORG_FILE_NAME |sed 's/^miui_OneX_\([0-9.]*\)_\([a-e0-9]\{10\}\)_\([0-9.]*\).zip$/\3/'`
+    RELEASE_MD5SUM=`echo $ORG_FILE_NAME |sed 's/^miui_OneX_\([0-9.]*\)_\([a-e0-9]\{10\}\)_\([0-9.]*\).zip$/\2/'`
+    TARGET_MD5SUM=`md5sum ./tmp/out-signed.zip|cut -c -10`
+    TARGET_PACKAGE_NAME=miui_OneXT_${RELEASE_DATA}_${TARGET_MD5SUM}_${RELEASE_VERSION}_${THIS_MINUTE}.zip
+    echo "Rename"
+    [ -d miui_OneXT ]||mkdir -p miui_OneXT
+    mv ./tmp/out-signed.zip  ./miui_OneXT/${TARGET_PACKAGE_NAME}
+    rm -rf ./tmp
+    echo "You Rom is here: miui_OneXT/${TARGET_PACKAGE_NAME}"
+    echo -n "Continue to pack rom:(y/N) "
+    read opt2
+    if [ -z ${opt2} ]
+    then
+        echo "Bye!"
+        exit 1;
+    fi
+    if [ ${opt2} == "y" ]||[ ${opt2} == "Y" ]
+    then
+        return;
+    fi
+    echo "Bye!"
+    exit 1;
+}
+
+
+
+clear;
+
+while :
+do
+    pushd miui_OneX
+    INPUT_FILES=(`ls |grep  miui_OneX_`)
+    popd
+
+    clear
+
+    echo ============Please select  base OneX Miui Rom file============
+
+    it=0
+    for i in ${INPUT_FILES[@]}
+    do
+    echo -e ${it}"\t"$i
+    it=`expr ${it} + 1`
+    done
+    echo -e x"\t"Exit
+    echo
+
+    maxit=`expr $it - 1`
+
+    echo -n "Enter Option:"
+    read opt
+
+    if [ "${opt}" == "x" ]
+    then
+        echo "Bye"
+        exit 0;
+    fi
+
+    if [ ! -f miui_OneX/${INPUT_FILES[${opt}]} ]
+    then
+       echo "Selected wrong, remiui_OneX"
+       continue
+    fi
+    MAKE_MIUI_ONEXT_PACKAGE ${INPUT_FILES[${opt}]}
+
+done;
+
+
+

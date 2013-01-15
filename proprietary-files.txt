@@ -1,0 +1,184 @@
+/system/ect/firmware/*
+/system/etc/soundimages/*
+/system/etc/AIC3008_REG_DualMic.csv
+/system/etc/AIC3008_REG_DualMic_XC.csv
+/system/etc/DSP_number.txt
+
+/system/etc/build.prop
+
+#HTC battery
+/system/bin/htcbatt
+
+#Volume daemon
+/system/bin/vold
+
+#Wap_suppplicant
+/system/bin/wpa_supplicant
+
+#htc ril
+/system/bin/rild
+/system/lib/htc_ril.so
+
+#these one are exactly the same
+#/system/lib/libhtc_rilhook.so
+#/system/lib/libril-icera.so
+#/system/lib/librilpos.so
+#/system/lib/libril.so
+
+#htc agpsd
+/system/bin/agpsd
+
+#do not replace, it still work
+#use monkey versoin fasten gps
+/system/lib/libgpsservices.so
+/system/lib/libgps.so
+/system/lib/libsupllocationprovider.so
+
+#htc misc
+/system/bin/sysro
+/system/bin/sysrw
+/system/bin/zchgd
+
+/system/xbin/nano
+
+
+#remove
+/system/lib/modules/*
+#hw
+/system/lib/hw/*.so
+
+#nfc
+/system/vendor/firmware/libpn544_fw.so
+/system/lib/libhardware_legacy.so
+
+#sound
+#/system/lib/libasound.so
+/system/lib/libcall_volume.so
+
+#all libnv* is the same
+
+
+#sensor
+/system/lib/libmllite.so
+
+#wifi dhcp related
+#use monkey version
+/system/lib/libnetutils.so
+
+#nfc,big diff, use monkey
+/system/lib/libnfc.so
+
+#camera this two files difference very little. I think it can be ignored
+#=======if camra does not work, repalce these two files
+#/system/lib/libnvcamerahdr.so
+#/system/lib/libnvmm_camera.so
+
+#unknow very small changes
+#keep miui version
+#/system/lib/liborion.so
+
+#build time is different keep miui
+#/system/lib/libstagefright_soft_aacdec.so
+#/system/lib/libstagefright_soft_aacenc.so
+
+#graphics,Both should be ok, use monkey
+/system/lib/lib/libnvodm_imager.so
+
+#google things, do not change
+#/system/lib/libpatts_engine_jni_api.so
+
+#related to power management I guess
+#try use monkey
+/system/lib/libpower.so
+
+#unknow, but see some modules related funciton.
+#I guess it should related to hardware more.
+#use monkey versoin first
+/system/lib/libwivu.so
+
+#very small diff
+#/system/lib/libwebrtc_audio_preprocessing.so
+
+#webcore use MIUI
+#/system/lib/libwebcore.so
+
+#IME related
+#/system/lib/libpphwrcore.so
+#/system/lib/libpphwrprovider.so
+#/system/lib/libpphwr.so
+
+
+#libskia.so do not replace
+#/system/lib/libskia.so
+
+#audio related
+/system/lib/libsonivox.so
+
+#sqlite
+#libsqlite_jni.so
+#libsqlite.so
+
+#libbcc.so very small diff
+#/system/lib/libbcc.so
+#/system/lib/libbcc.so.sha1
+#/system/lib/libbcinfo.so
+
+#libhtc-opt2.so  only build time is different
+#/system/lib/libhtc-opt2.so
+
+
+================Other files in XT stock rom==================================
+libpatts_engine_jni_api.so   Google Maps not announcing street names
+
+lib/libpphwr.so   HTC中文手写
+lib/libpphwrprovider.so
+
+libskia.so or libharfbuzz.so related to freetype
+
+lib/libhardware_legancy.so  gps和wifi都是被legacy调起来的
+
+libmtimage-jni.so 美图秀秀的jni
+libmmsdkjni.so 中国移动能力超市的jni
+
+
+lib/libmllite.so sensor
+libnetutils.so wifi dhcp realted
+
+libOrion.so
+
+libpatts_engine_jni_api.so
+
+
+#一个傻X辞典
+libscanner_eclair.so
+libscanner.so
+libscr-bcr_camdict.so
+libscr-bcr.so
+
+#shelld
+libshell_jni.so
+libshellservice.so
+libshell.so
+
+#libBMapApiEngine.so
+百度地图
+
+smartcard related
+#libassd.so
+
+#似乎是新浪微薄的余毒
+libutility.so
+
+#libwml_xsl.so
+
+
+# A Free Codec For Free Speech
+libspeex-jni.so
+libspeex_sh.so
+
+#libvt_jni.so
+#libvtmedia.so
+#libvtservice.so
+#libvt.so
+#libxmltransform.so
+
