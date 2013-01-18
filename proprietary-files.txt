@@ -9,8 +9,18 @@
 #HTC battery
 /system/bin/htcbatt
 
+#Only build time is different
+#/system/bin/debuggerd
+
 #Volume daemon
 /system/bin/vold
+
+#exact the same
+#/system/bin/dnsmasq
+#/system/bin/mdnsd
+#/system/lib/libmdnssd.so
+#/system/lib/libmllite.so
+
 
 #Wap_suppplicant
 /system/bin/wpa_supplicant
@@ -25,8 +35,13 @@
 #/system/lib/librilpos.so
 #/system/lib/libril.so
 
-#htc agpsd
-/system/bin/agpsd
+#talk to kernel
+/system/lib/libnetlink.so
+
+
+#htc agpsd.
+#Use OneX version, only build date is different when OneXT update to 3.1.2
+#/system/bin/agpsd
 
 #do not replace, it still work
 #use monkey versoin fasten gps
@@ -73,6 +88,9 @@
 #/system/lib/libnvcamerahdr.so
 #/system/lib/libnvmm_camera.so
 
+#：odm image 的hal库，这部分默认情况下NV只提供了binary，在full build时会将此库copy到system目录下，继而集成到system.img中去
+/system/lib/libnvodm_imager.so
+
 #unknow very small changes
 #keep miui version
 #/system/lib/liborion.so
@@ -99,8 +117,17 @@
 #very small diff
 #/system/lib/libwebrtc_audio_preprocessing.so
 
+
+#wifi
+/system/lib/crda/regulatory.bin
+
 #webcore use MIUI
 #/system/lib/libwebcore.so
+
+#vide decode related use monkey
+/system/lib/libstagefright.so
+
+
 
 #IME related
 #/system/lib/libpphwrcore.so
@@ -134,6 +161,9 @@ lib/libpphwr.so   HTC中文手写
 lib/libpphwrprovider.so
 
 libskia.so or libharfbuzz.so related to freetype
+
+
+如果不用位置服务程序的，请自行删除/system/app下的HtcLaputa.apk，HtcLaputaInstaller.apk，HtcLocationsWidget3d.apk，HtcLocationsWidgetSettings3d.apk以及/system/lib/下的libLaputaEngine.so,libLaputaLbJni.so，libLaputaLbProviderJni.so，libLaputaLogJni.so
 
 lib/libhardware_legancy.so  gps和wifi都是被legacy调起来的
 
