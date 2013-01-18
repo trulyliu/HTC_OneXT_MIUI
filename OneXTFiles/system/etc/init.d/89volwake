@@ -1,3 +1,0 @@
-#!/system/bin/sh
-#MIUI Australia Volume Wake Tweak
-echo 1 > /sys/keyboard/vol_wakeup
