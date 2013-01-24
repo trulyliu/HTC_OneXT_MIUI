@@ -47,9 +47,9 @@ echo $MINFREE > /sys/module/lowmemorykiller/parameters/minfree;
 chmod 444 /sys/module/lowmemorykiller/parameters/minfree;
 
 #Disable log cat on boot
-if [ "`read_sys_setting tweaks_disable_logcat 0`" = "1" ]; then
-	echo "Disabling logcat";
-fi
+#if [ "`read_sys_setting tweaks_disable_logcat 0`" = "1" ]; then
+#	echo "Disabling logcat";
+#fi
 
 #Readahead tweaks
 
@@ -365,6 +365,6 @@ echo "500" > /proc/sys/vm/dirty_expire_centisecs;
 echo "1000" > /proc/sys/vm/dirty_writeback_centisecs
 
 #Remove Logging
-rm /dev/log/main
+#rm /dev/log/main
 
 # End of the script

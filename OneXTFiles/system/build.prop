@@ -260,7 +260,7 @@ ro.product.mod_device=onex
 ro.skia.use_data_fonts=1
 
 #MIUI Australia Tweaks
-wifi.supplicant_scan_interval=180
+wifi.supplicant_scan_interval=45
 windowsmgr.max_events_per_sec=300
 ro.max.fling_velocity=12000 
 ro.min.fling_velocity=8000
