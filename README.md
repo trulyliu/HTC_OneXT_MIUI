@@ -1,6 +1,8 @@
 HTC_OneXT_MIUI
 =================
 
+This project is died. Continue with patchrom_onext.
+
 Porting MIUI to HTC_OneX
 
 
